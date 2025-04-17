@@ -87,8 +87,7 @@ usage: ptree [-h] [-a] [-d] [-L LEVEL] [-f] [-I EXCLUDE] [-P PATTERN] [--color {
 
 ## 🖼️ 效果演示
 
-![示例截图](https://via.placeholder.com/600x300.png/CCCCCC?text=Colorized+Output+Example)  
-*（截图区域建议补充实际效果图）*
+![示例截图](./example/pytree.bmp)  
 
 ---
 
