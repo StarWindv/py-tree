@@ -2,7 +2,7 @@
 
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/starwindv/py-tree)
 
-一个Python实现的类`tree`命令工具，支持彩色输出、路径过滤、深度控制等功能，适配中英文环境。
+一个Python实现的类 Linux `tree`命令工具，支持彩色输出、路径过滤、深度控制等功能，适配中英文环境。
 
 [English](./README_EN.md)
 
@@ -76,13 +76,15 @@ pytree -P "*.py" -I "*.log" -a src/
 usage: pytree [-h] [-a] [-d] [-L LEVEL] [-f] [-I EXCLUDE] [-P PATTERN] [--color {always,auto,never}] [directory]
 
 选项说明：
-  -a, --all         显示隐藏文件
-  -d, --dir-only    仅显示目录
-  -L LEVEL          最大遍历深度
-  -f, --full-path   显示完整路径
-  -I EXCLUDE        排除模式（可多次使用）
-  -P PATTERN        文件名匹配模式
-  --color           颜色模式：always/auto/never（默认auto）
+  -a, --all                     显示隐藏文件
+  -d, --dir-only                仅显示目录
+  -L LEVEL                      最大遍历深度
+  -f, --full-path               显示完整路径
+  -I EXCLUDE                    排除模式（可多次使用）
+  -P PATTERN                    文件名匹配模式
+  --color                       颜色模式：always/auto/never（默认auto）
+  -sc, --set_Chinese            强制设置显示语言为中文
+  -cl, --clear_language_setting 清除强制语言设置
 ```
 
 ---
