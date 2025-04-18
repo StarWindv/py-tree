@@ -17,6 +17,7 @@ def tree(start_path, config, prefix='', depth=0, visited=None, stream=True, foll
     :param follow_symlinks: 是否跟随符号链接进入目录
     :return: None if stream else list
     """
+    # 处理符号链接循环检测
     if follow_symlinks:
         if visited is None:
             visited = set()
@@ -32,6 +33,7 @@ def tree(start_path, config, prefix='', depth=0, visited=None, stream=True, foll
     else:
         visited = None
 
+    # 异常处理
     try:
         entries = os.listdir(start_path)
     except PermissionError:
@@ -49,6 +51,7 @@ def tree(start_path, config, prefix='', depth=0, visited=None, stream=True, foll
         else:
             return [line]
 
+    # 过滤和排序
     entries = [e for e in entries if config.all or not e.startswith('.')]
     entries = [e for e in entries if not should_ignore(e, config.exclude)]
     if config.pattern:
