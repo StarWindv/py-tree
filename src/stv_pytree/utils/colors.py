@@ -10,12 +10,15 @@ COLORS = {
 }
 
 def get_color(path, name):
-    if os.path.islink(path):
-        return COLORS['link']
-    if os.path.isdir(path):
-        return COLORS['dir']
-    if os.access(path, os.X_OK):
-        return COLORS['exec']
-    if os.path.ismount(path) or os.stat(path).st_mode & 0o7000:
-        return COLORS['special']
+    try:
+        if os.path.islink(path):
+            return COLORS['link']
+        if os.path.isdir(path):
+            return COLORS['dir']
+        if os.access(path, os.X_OK):
+            return COLORS['exec']
+        if os.path.ismount(path) or os.stat(path).st_mode & 0o7000:
+            return COLORS['special']
+    except FileNotFoundError:
+        pass
     return ''
