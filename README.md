@@ -4,12 +4,14 @@
 
 一个Python实现的类`tree`命令工具，支持彩色输出、路径过滤、深度控制等功能，适配中英文环境。
 
+[English](./README_EN.md)
+
 ---
 
 ## ✨ 功能特性
 
 - **彩色高亮**  
-  区分目录、可执行文件、符号链接等类型（支持自动检测终端颜色）
+  区分目录、可执行文件、符号链接等类型
 - **智能过滤**  
   - 支持 `-P` 通配符匹配包含文件  
   - 支持 `-I` 多模式排除文件/目录  
@@ -26,10 +28,10 @@
 ## 📦 安装
 
 ```bash
-pip install py-tree
+pip install stv_pytree
 ```
 
-*通过入口点命令 `ptree` 直接调用*
+*通过入口点命令 `pytree` 直接调用*
 
 ---
 
@@ -38,32 +40,32 @@ pip install py-tree
 ### 基础用法
 
 ```bash
-ptree [目录]
+pytree [目录]
 ```
 
 ### 显示隐藏文件（包括.开头文件）
 
 ```bash
-ptree -a ~/projects
+pytree -a ~/projects
 ```
 
 ### 限制遍历深度为2
 
 ```bash
-ptree -L 2 /usr
+pytree -L 2 /usr
 ```
 
 ### 仅显示目录 & 完整路径
 
 ```bash
-ptree -d -f /var/log
+pytree -d -f /var/log
 ```
 
 ### 组合过滤
 
 ```bash
 # 显示所有test开头的Python文件（排除.log结尾文件）
-ptree -P "*.py" -I "*.log" -a src/
+pytree -P "*.py" -I "*.log" -a src/
 ```
 
 ---
@@ -71,7 +73,7 @@ ptree -P "*.py" -I "*.log" -a src/
 ## 📌 命令行选项
 
 ```text
-usage: ptree [-h] [-a] [-d] [-L LEVEL] [-f] [-I EXCLUDE] [-P PATTERN] [--color {always,auto,never}] [directory]
+usage: pytree [-h] [-a] [-d] [-L LEVEL] [-f] [-I EXCLUDE] [-P PATTERN] [--color {always,auto,never}] [directory]
 
 选项说明：
   -a, --all         显示隐藏文件
@@ -87,14 +89,13 @@ usage: ptree [-h] [-a] [-d] [-L LEVEL] [-f] [-I EXCLUDE] [-P PATTERN] [--color {
 
 ## 🖼️ 效果演示
 
-![示例截图](./example/pytree.bmp)  
+![示例截图](https://github.com/starwindv/py-tree/blob/main/example/pytree.bmp?raw=True)
 
 ---
 
 ## 🤝 贡献指南
 
 欢迎通过Issue报告问题或提交Pull Request！  
-开发环境建议使用Python 3.8+，遵循PEP8代码规范。
 
 ---
 
