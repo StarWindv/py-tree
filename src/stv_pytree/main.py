@@ -26,9 +26,15 @@ def main():
         ignore_case=True
     )
 
-    try:
-        result = [config.root_name]
-        result.extend(tree(config.base_path, config))
-        print('\n'.join(result))
+    # try: # print the whole tree at once
+    #     result = [config.root_name]
+    #     result.extend(tree(config.base_path, config))
+    #     print('\n'.join(result))
+    # except KeyboardInterrupt:
+    #     return
+
+    try: # streaming output
+        print(config.root_name)
+        tree(config.base_path, config)
     except KeyboardInterrupt:
         return
