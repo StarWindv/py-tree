@@ -50,27 +50,27 @@ def main(__version__ = __version__):
         ignore_case=True
     )
 
-    """
-    try: 
-        # print the whole tree at once
-        # when using this mode, 
-        # function tree's arg named "stream" must be False
-        
-        result = [config.root_name]
-        result.extend(tree(config.base_path, config))
-        print('\n'.join(result))
-    except KeyboardInterrupt:
-        return"""
+    if args.no_stream:
+        try:
+            # print the whole tree at once
+            # when using this mode,
+            # function tree's arg named "stream" must be False
 
-    try:
-        """
-        # streaming output 
-        # when using this mode, 
-        # function tree's arg named "stream" must be True
-        """
+            result = [config.root_name]
+            result.extend(tree(config.base_path, config, stream=False, follow_symlinks=args.follow_symlinks))
+            print('\n'.join(result))
+        except KeyboardInterrupt:
+            print()
+    else:
+        try:
+            """
+            # streaming output 
+            # when using this mode, 
+            # function tree's arg named "stream" must be True
+            """
 
-        print(config.root_name)
-        tree(config.base_path, config)
-    except KeyboardInterrupt:
-        print() # 多加个换行，看起来好看，不至于下一行和树连在一起
-        return
+            print(config.root_name)
+            tree(config.base_path, config, stream=True, follow_symlinks=args.follow_symlinks)
+        except KeyboardInterrupt:
+            print() # 多加个换行，看起来好看，不至于下一行和树连在一起
+    return
