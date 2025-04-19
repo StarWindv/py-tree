@@ -73,7 +73,7 @@ pytree -P "*.py" -I "*.log" -a src/
 ## 📌 命令行选项
 
 ```text
-usage: pytree [-h] [-a] [-d] [-L LEVEL] [-f] [-I EXCLUDE] [-P PATTERN] [--color {always,auto,never}] [directory]
+usage: pytree [-h] [-a] [-d] [-L LEVEL] [-f] [-I EXCLUDE] [-P PATTERN] [--color {always,auto,never}] [-ns] [-fs] [-v] [-lic] [-sc] [-cl] [directory]
 
 选项说明：
   -a, --all                     显示隐藏文件
@@ -83,6 +83,8 @@ usage: pytree [-h] [-a] [-d] [-L LEVEL] [-f] [-I EXCLUDE] [-P PATTERN] [--color 
   -I EXCLUDE                    排除模式（可多次使用）
   -P PATTERN                    文件名匹配模式
   --color                       颜色模式：always/auto/never（默认auto）
+  -ns, --no-stream              是否禁用流式输出
+  -fs, --follow-symlinks        是否深入符号链接
   -sc, --set_Chinese            强制设置显示语言为中文
   -cl, --clear_language_setting 清除强制语言设置
 ```
