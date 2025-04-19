@@ -17,11 +17,14 @@ def stv_parse():
     parser.add_argument('--color', choices=['always', 'auto', 'never'], default='auto', help=pt[7])
     parser.add_argument('directory', nargs='?', default='.', help=pt[8])
 
-    parser.add_argument('-v', '--version', action="store_true", help=pt[9])
-    parser.add_argument('-lic', '--license', action="store_true", help=pt[10])
+    parser.add_argument('-ns', '--no-stream', action="store_true", help=pt[9])
+    parser.add_argument('-fs', '--follow-symlinks', action="store_true", help=pt[10])
 
-    parser.add_argument('-sc', '--set_Chinese', action="store_true", help=pt[11])
-    parser.add_argument('-cl', '--clear_language_setting', action="store_true", help=pt[12])
+    parser.add_argument('-v', '--version', action="store_true", help=pt[11])
+    parser.add_argument('-lic', '--license', action="store_true", help=pt[12])
+
+    parser.add_argument('-sc', '--set_Chinese', action="store_true", help=pt[13])
+    parser.add_argument('-cl', '--clear_language_setting', action="store_true", help=pt[14])
 
 
     args = parser.parse_args()
