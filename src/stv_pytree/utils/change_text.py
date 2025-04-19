@@ -4,7 +4,6 @@ from stv_pytree.utils.lang_utils import language_config
 
 def parse_text(check = True):
     check = language_config() if check else check
-
     if is_ch() or check:  # 检测是否为中文，调用stv_utils库的is_ch()函数即可
         title = "Python目录树命令"
         hidden_help = "显示隐藏文件"
@@ -15,6 +14,10 @@ def parse_text(check = True):
         pattern = "包含的文件名模式"
         color = "彩色输出"
         directory_help = "起始目录"
+
+        no_stream_help = '是否禁用流式输出'
+
+        follow_symlinks_help = '是否深入符号链接'
 
         version_help = "输出项目版本"
         license_help = "输出项目所用许可证"
@@ -30,6 +33,10 @@ def parse_text(check = True):
         color = "Color output"
         directory_help = "Starting directory"
 
+        no_stream_help = 'Disable streaming output'
+
+        follow_symlinks_help = 'Follow symbolic links'
+
         version_help = "Print project version"
         license_help = "Print project license"
 
@@ -38,7 +45,8 @@ def parse_text(check = True):
 
     array = [title, hidden_help, only_dir_help,
              level_help, full_path_help, exclude,
-             pattern, color, directory_help,
+             pattern, color, directory_help, no_stream_help, follow_symlinks_help,
+
              version_help, license_help, language_help,
              clear_language_setting_help]
 
