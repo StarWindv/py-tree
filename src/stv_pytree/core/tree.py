@@ -4,7 +4,7 @@ from stv_pytree.utils.utils import should_ignore
 from fnmatch import fnmatch
 
 
-def tree(start_path, config, prefix='', depth=0, visited=None, stream=True, follow_symlinks=True):
+def tree(start_path, config, prefix='', depth=0, visited=None, stream=True, follow_symlinks=False):
     """
     generate a tree structure of the directory starting from start_path
 
