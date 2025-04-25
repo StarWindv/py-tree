@@ -6,7 +6,7 @@ from fnmatch import fnmatch
 
 def tree(start_path, config, prefix='', depth=0, visited=None, stream=True, follow_symlinks=False):
     """
-    generate a tree structure of the directory starting from start_path
+    Generate a tree structure of the directory starting from start_path
 
     :param start_path: 起始路径
     :param config: 配置对象
@@ -26,12 +26,16 @@ def tree(start_path, config, prefix='', depth=0, visited=None, stream=True, foll
             line = f"{prefix}[循环链接跳过: {os.path.basename(start_path)}]"
             if stream:
                 print(line)
-                return
+                return 0, 0
             else:
-                return [line]
+                return [line], 0, 0
         visited.add(real_path)
     else:
         visited = None
+
+    # 初始化统计变量
+    current_dirs = 0
+    current_files = 0
 
     # 异常处理
     try:
@@ -40,16 +44,16 @@ def tree(start_path, config, prefix='', depth=0, visited=None, stream=True, foll
         line = f"{prefix}[Permission denied]"
         if stream:
             print(line)
-            return [] if not stream else None
+            return 0, 0
         else:
-            return [line]
+            return [line], 0, 0
     except OSError as e:
         line = f"{prefix}[Error: {str(e)}]"
         if stream:
             print(line)
-            return [] if not stream else None
+            return 0, 0
         else:
-            return [line]
+            return [line], 0, 0
 
     # 过滤和排序
     entries = [e for e in entries if config.all or not e.startswith('.')]
@@ -67,6 +71,17 @@ def tree(start_path, config, prefix='', depth=0, visited=None, stream=True, foll
         full_path = os.path.join(start_path, entry)
         display_name = os.path.join(config.root_name, full_path[len(config.base_path)+1:]) if config.full_path else entry
 
+        # 判断是否为符号链接并统计
+        is_link = os.path.islink(full_path)
+        if is_link:
+            current_files += 1
+        else:
+            if os.path.isdir(full_path):
+                current_dirs += 1
+            else:
+                current_files += 1
+
+        # 处理符号链接显示
         if os.path.islink(full_path):
             try:
                 link_target = os.readlink(full_path)
@@ -74,6 +89,7 @@ def tree(start_path, config, prefix='', depth=0, visited=None, stream=True, foll
             except OSError:
                 display_name += ' -> [broken link]'
 
+        # 颜色处理
         color = ''
         end_color = ''
         if config.color:
@@ -88,18 +104,28 @@ def tree(start_path, config, prefix='', depth=0, visited=None, stream=True, foll
         else:
             lines.append(line)
 
+        # 递归处理子目录
         is_dir = os.path.isdir(full_path)
-        is_link = os.path.islink(full_path)
+        if is_dir and (follow_symlinks or not os.path.islink(full_path)):
+            if config.level is None or depth < config.level:
+                new_prefix = prefix + ('    ' if is_last else '│   ')
+                new_visited = visited.copy() if follow_symlinks else None
+                if stream:
+                    sub_dirs, sub_files = tree(full_path, config, new_prefix, depth + 1, new_visited, stream=True, follow_symlinks=follow_symlinks)
+                    current_dirs += sub_dirs
+                    current_files += sub_files
+                else:
+                    sub_lines, sub_dirs, sub_files = tree(full_path, config, new_prefix, depth + 1, new_visited, stream=False, follow_symlinks=follow_symlinks)
+                    lines.extend(sub_lines)
+                    current_dirs += sub_dirs
+                    current_files += sub_files
 
-        if is_dir:
-            if follow_symlinks or not is_link:
-                if config.level is None or depth < config.level:
-                    new_prefix = prefix + ('    ' if is_last else '│   ')
-                    new_visited = visited.copy() if follow_symlinks else None
-                    if stream:
-                        tree(full_path, config, new_prefix, depth + 1, new_visited, stream=True, follow_symlinks=follow_symlinks)
-                    else:
-                        sub_lines = tree(full_path, config, new_prefix, depth + 1, new_visited, stream=False, follow_symlinks=follow_symlinks)
-                        lines.extend(sub_lines)
-
-    return lines if not stream else None
+    # 流式模式根目录添加统计行
+    if stream and depth == 0:
+        print(f"\n{current_dirs} directories, {current_files} files")
+        return current_dirs, current_files
+    elif not stream and depth == 0:
+        lines.append(f"\n{current_dirs} directories, {current_files} files")
+        return lines, current_dirs, current_files
+    else:
+        return (lines, current_dirs, current_files) if not stream else (current_dirs, current_files)
