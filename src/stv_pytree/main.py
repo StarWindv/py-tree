@@ -4,7 +4,7 @@ import argparse
 import sys
 import os
 
-__version__ = "0.0.4"
+__version__ = "0.0.6"
 
 
 def main(__version__ = __version__):
@@ -52,15 +52,31 @@ def main(__version__ = __version__):
 
     if args.no_stream:
         try:
+            """
             # print the whole tree at once
             # when using this mode,
             # function tree's arg named "stream" must be False
+            """
 
             result = [config.root_name]
             result.extend(tree(config.base_path, config, stream=False, follow_symlinks=args.follow_symlinks))
-            print('\n'.join(result))
+            print(result[0])
+            for i in result[1:]:
+                print("\n".join(i))
+                """
+                # print(f'\033[31mDEBUG Type:{type(i)}\033[0m')
+                """
+
+        except TypeError:
+            """
+            # print(f"\033[31mTypeError:Type of {i} is {type(i)}\n\033[0m")
+            # This error occurs because the counters for the directory and file returned integers.
+            # But we don't need to worry about it.
+            """
+
         except KeyboardInterrupt:
-            print()
+            return
+
     else:
         try:
             """
@@ -72,5 +88,12 @@ def main(__version__ = __version__):
             print(config.root_name)
             tree(config.base_path, config, stream=True, follow_symlinks=args.follow_symlinks)
         except KeyboardInterrupt:
-            print() # 多加个换行，看起来好看，不至于下一行和树连在一起
-    return
+            return
+    """
+    # 如你所见，文件夹计数器并不会包括目录"."。
+    """
+    print(f"\033[90mThe folder counter does not include the current directory(root).\033[0m")
+    """
+    # print()
+    果然最后还是没有换行好看一些嘛...
+    """
