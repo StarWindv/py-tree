@@ -18,9 +18,10 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 dependencies = [
-    "stv_utils"
+    "stv_utils==0.0.6"
 ]
 urls = { "Homepage" = "https://github.com/StarWindv/py-tree" }
 
 [project.scripts]
+
 pytree = "stv_pytree.main:main"
